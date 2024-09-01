@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "title": "Hamburguesa1",
+        "description": "Hamburguesa1 Roja",
+        "code": "zap1r",
+        "price": 1000,
+        "status": true,
+        "stock": 10,
+        "category": "Hamburguesas",
+        "thumbnails": [ "zapatilla-1"]
+    },
+    {
+        "id": 2,
+        "title": "Hamburguesa2",
+        "description": "Hamburguesa2 Roja",
+        "code": "zap2r",
+        "price": 1500,
+        "status": true,
+        "stock": 10,
+        "category": "Hamburguesas",
+        "thumbnails": [ "zapatilla-2"]
+    },
+    {
+        "id": 3,
+        "title": "Lomito3",
+        "description": "Lomito3 Verde",
+        "code": "zap3r",
+        "price": 2900,
+        "status": true,
+        "stock": 30,
+        "category": "Lomitos",
+        "thumbnails": [ "lomito-2"]
+    }
+]
