@@ -1,0 +1,21 @@
+<h1>Nuestros Productos</h1>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">
+  {{#each productos}}
+  <div class="col">
+    <div class="card shadow-sm">
+      <img src="../img/productos/{{ thumbnail }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text">{{ title }}</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-info">Ver</button>
+            <button type="button" class="btn btn-sm btn-success">Comprar</button>
+          </div>
+          <small class="text-body-secondary">$ {{ price }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

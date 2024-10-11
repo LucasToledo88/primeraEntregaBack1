@@ -1,0 +1,97 @@
+<h1>Productos RealTime</h1>
+<hr>
+
+<div class="row">
+  <div class="col">
+    <h5 class="text-info">Agregar Producto</h5>
+    <form id="formAgregarProducto" class="p-3 border border-info was-validated">
+      <div class="row">
+        <div class="col-8">
+          <label for="product_title">Nombre</label>
+          <input type="text" class="form-control form-control-sm" id="product_title" name="product_title"
+            placeholder="Un Nombre" required autofocus>
+        </div>
+        <div class="col-4">
+          <label for="product_category">Categoría</label>
+          <input type="text" class="form-control form-control-sm" id="product_category" name="product_category"
+            placeholder="Una Categoría" required>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-4">
+          <label for="product_price">Precio</label>
+          <input type="number" class="form-control form-control-sm" id="product_price" name="product_price" min="0"
+            placeholder="Un Precio" required>
+        </div>
+        <div class="col-4">
+          <label for="product_stock">Stock</label>
+          <input type="number" class="form-control form-control-sm" id="product_stock" name="product_stock" min="0"
+            placeholder="El Stock actual" required>
+        </div>
+      </div>
+      <button id="btnAgregarProducto" type="button" class="mt-3 btn btn-sm btn-success">Agregar</button>
+    </form>
+  </div>
+  <div class="col">
+    <h5 class="text-info">Editar Producto</h5>
+    <form id="formEditarProducto" class="p-3 border border-info was-validated">
+
+      <div class="row">
+        <div class="col-8">
+          <label for="product_title">Nombre</label>
+          <input type="text" class="form-control form-control-sm" id="product_title" name="product_title"
+            placeholder="El Nombre del producto" required>
+        </div>
+        <div class="col-4">
+          <label for="product_category">Categoría</label>
+          <input type="text" class="form-control form-control-sm" id="product_category" name="product_category"
+            placeholder="La Categoría del producto" required>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-3">
+          <label for="product_price">Precio</label>
+          <input type="number" class="form-control form-control-sm" id="product_price" name="product_price" min="0"
+            placeholder="El Precio del producto" required>
+        </div>
+        <div class="col-3">
+          <label for="product_stock">Stock</label>
+          <input type="number" class="form-control form-control-sm" id="product_stock" name="product_stock" min="0"
+            placeholder="El Stock actual del producto" required>
+        </div>
+        <div class="col-6">
+          <label for="product_stock">ID</label>
+          <input type="text" disabled class="form-control form-control-sm disabled" id="product_id" name="product_id" required>
+          <input type="hidden" id="product_thumbnail" name="product_thumbnail" required>
+        </div>
+      </div>
+      <button id="btnEditarProducto" type="button" class="mt-3 btn btn-sm btn-success">Editar</button>
+    </form>
+  </div>
+</div>
+
+<hr>
+
+<div id="lstProductos" class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-2">
+  {{#each productos}}
+  <div id="product_{{ _id }}" class="col">
+    <div class="card shadow-sm">
+      <img id="product_{{ _id }}_thumbnail" src="../img/productos/{{ thumbnail }}" class="card-img-top" alt="{{ title }}">
+      <div class="card-body">
+        <p id="product_{{ _id }}_title" class="card-text">{{ title }}</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" onclick="editarProducto('{{ _id }}', '{{ title }}', '{{ category }}', '{{ price }}', '{{ stock }}', '{{ thumbnail }}')" class="btn btn-sm btn-success">Editar</button>
+            <button type="button" onclick="borrarProducto('{{ _id }}')" class="btn btn-sm btn-danger">Eliminar</button>
+          </div>
+          <small id="product_{{ _id }}_price" class="text-body-secondary">$ {{ price }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realTimeProducts.js"></script>
