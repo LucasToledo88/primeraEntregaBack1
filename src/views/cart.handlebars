@@ -1,0 +1,14 @@
+<h1>Datos del Carrito</h1>
+<hr>
+
+{{#each carrito.products}}
+<div class="d-flex align-justify">
+  <div class="flex-shrink-0">
+    <img src="../img/productos/{{ product.thumbnail }}" class="img " width="96" alt="...">
+  </div>
+  <div class="flex-grow-1 ms-3">
+    <h3>{{ product.name }}</h3>
+    <p>{{ quantity}} unidades a $ {{ product.price }} cada uno.</p>
+  </div>
+</div>
+{{/each}}

@@ -1,10 +1,10 @@
-<h1>Productos RealTime</h1>
+<h1>{{ titulo }}</h1>
 <hr>
 
 <div class="row">
   <div class="col">
     <h5 class="text-info">Agregar Producto</h5>
-    <form id="formAgregarProducto" class="p-3 border border-info was-validated">
+    <form id="formAddProduct" class="p-3 border border-info was-validated">
       <div class="row">
         <div class="col-8">
           <label for="product_title">Nombre</label>
@@ -29,12 +29,12 @@
             placeholder="El Stock actual" required>
         </div>
       </div>
-      <button id="btnAgregarProducto" type="button" class="mt-3 btn btn-sm btn-success">Agregar</button>
+      <button id="btnAddProduct" type="button" class="mt-3 btn btn-sm btn-success">Agregar</button>
     </form>
   </div>
   <div class="col">
     <h5 class="text-info">Editar Producto</h5>
-    <form id="formEditarProducto" class="p-3 border border-info was-validated">
+    <form id="formEditProduct" class="p-3 border border-info was-validated">
 
       <div class="row">
         <div class="col-8">
@@ -65,7 +65,7 @@
           <input type="hidden" id="product_thumbnail" name="product_thumbnail" required>
         </div>
       </div>
-      <button id="btnEditarProducto" type="button" class="mt-3 btn btn-sm btn-success">Editar</button>
+      <button id="btnEditProduct" type="button" class="mt-3 btn btn-sm btn-success">Editar</button>
     </form>
   </div>
 </div>
@@ -81,8 +81,8 @@
         <p id="product_{{ _id }}_title" class="card-text">{{ title }}</p>
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
-            <button type="button" onclick="editarProducto('{{ _id }}', '{{ title }}', '{{ category }}', '{{ price }}', '{{ stock }}', '{{ thumbnail }}')" class="btn btn-sm btn-success">Editar</button>
-            <button type="button" onclick="borrarProducto('{{ _id }}')" class="btn btn-sm btn-danger">Eliminar</button>
+            <button type="button" onclick="editProduct('{{ _id }}', '{{ title }}', '{{ category }}', '{{ price }}', '{{ stock }}', '{{ thumbnail }}')" class="btn btn-sm btn-success">Editar</button>
+            <button type="button" onclick="deleteProduct('{{ _id }}')" class="btn btn-sm btn-danger">Eliminar</button>
           </div>
           <small id="product_{{ _id }}_price" class="text-body-secondary">$ {{ price }}</small>
         </div>

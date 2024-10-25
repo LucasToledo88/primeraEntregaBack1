@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const cartSchema = new mongoose.Schema({
-  date: { type: Date, default: Date.now },
   products: [
     {
       product: { type: mongoose.Schema.Types.ObjectId, ref: "products", required: true },

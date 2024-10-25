@@ -13,17 +13,17 @@ import ProductModel from "./models/product.model.js";
 
 const app = express();
 const PORT = 8001;
-
+const VERSION = '0.1.10-2024-10-10';
 
 // Server
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("./public"));
+app.use(express.static("./src/public"));
 
 // Express-Handlebars
 app.engine("handlebars", exphbs.engine());
 app.set("view engine", "handlebars");
-app.set("views", "./views");
+app.set("views", "./src/views");
 
 // Rutas
 app.use("/api/products", productsRouter);
@@ -36,7 +36,7 @@ app.use("/", viewsRouter);
 // Iniciamos servidor
 const httpServer = app.listen(PORT, () => {
   console.log(`✅ Servidor Listo. Escuchando en el puerto ${PORT}.`);
-
+  console.log(`✅ Versión: ${VERSION}. Backend I.`);
 });
 
 // Iniciamos servidor de sockets
@@ -66,18 +66,16 @@ socketServer.on('connection', socket => {
 });
 
 async function agregarProducto(socket, datos) {
-  const { code, title, price, stock, category } = datos;
-  const producto = await ProductModel.create({ code, title, price, stock, category });
-  //console.log(producto);
-
+  const { title, price, stock, category } = datos;
+  const producto = await ProductModel.create({ title, price, stock, category });
+console.log(producto)
   if (!producto) socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'No existe el producto que se intenta modificar.' });
 
-  socket.emit('agregarProductoAgregado', producto);
+  socket.emit('agregarProductoSuccess', producto);
 }
 
 async function editarProducto(socket, data) {
   try {
-    //console.log('data', data);
     const id = data._id;
     delete data._id;
     const producto = await ProductModel.findByIdAndUpdate(id, data, { returnDocument: 'after' });
@@ -85,8 +83,7 @@ async function editarProducto(socket, data) {
     if (!producto) socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'No existe el producto que se intenta modificar.' });
 
     await producto.save();
-    //console.log(producto);
-    socket.emit('editarProductoEditado', producto);
+    socket.emit('editarProductoSuccess', producto);
   } catch (error) {
     socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'Error al modificar el producto: ' + error.message });
   }
@@ -96,7 +93,7 @@ async function borrarProducto(socket, id) {
   try {
     const product = await ProductModel.findByIdAndDelete(id);
     if (!product) socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'No existe el producto que se intenta eliminar.' });
-    socket.emit('borrarProductoBorrado', id);
+    socket.emit('borrarProductoSuccess', id);
   } catch (error) {
     socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'Error al eliminar el producto: ' + error.message });
   }

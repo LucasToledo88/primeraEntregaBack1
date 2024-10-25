@@ -1,23 +1,24 @@
 const socket = io();
 
-const formAgregarProducto = document.getElementById('formAgregarProducto');
-const formEditarProducto = document.getElementById('formEditarProducto');
-const btnAgregarProducto = document.getElementById('btnAgregarProducto');
-const btnEditarProducto = document.getElementById('btnEditarProducto');
-const btnBorrarProducto = document.getElementById('btnBorrarProducto');
+const formAddProduct = document.getElementById('formAddProduct');
+const formEditProduct = document.getElementById('formEditProduct');
+const btnAddProduct = document.getElementById('btnAddProduct');
+const btnEditProduct = document.getElementById('btnEditProduct');
+const btnDeleteProduct = document.getElementById('btnDeleteProduct');
 
 const lstProductos = document.getElementById('lstProductos');
 
-function editarProducto(id, title, category, price, stock, thumbnail) {
-  formEditarProducto.product_id.value = id;
-  formEditarProducto.product_title.value = title;
-  formEditarProducto.product_category.value = category;
-  formEditarProducto.product_price.value = price;
-  formEditarProducto.product_stock.value = stock;
-  formEditarProducto.product_thumbnail.value = thumbnail;
+function editProduct(id, title, category, price, stock, thumbnail) {
+  formEditProduct.product_id.value = id;
+  formEditProduct.product_title.value = title;
+  formEditProduct.product_category.value = category;
+  formEditProduct.product_price.value = price;
+  formEditProduct.product_stock.value = stock;
+  formEditProduct.product_thumbnail.value = thumbnail;
+  formEditProduct.product_title.focus();
 }
 
-function borrarProducto(id) {
+function deleteProduct(id) {
   Swal.fire({
     title: "¿Estás seguro de eliminar el producto?",
     showCancelButton: true,
@@ -41,45 +42,45 @@ function mostrarMsj(tipo = 'success', texto = 'Genial!') {
   });
 }
 
-btnAgregarProducto.addEventListener('click', (e) => {
+btnAddProduct.addEventListener('click', (e) => {
 
-  if (formAgregarProducto.product_title.value.length == 0) return;
-  if (formAgregarProducto.product_category.value.length == 0) return;
-  if (formAgregarProducto.product_price.value.length == 0) return;
-  if (formAgregarProducto.product_stock.value.length == 0) return;
+  if (formAddProduct.product_title.value.length == 0) return;
+  if (formAddProduct.product_category.value.length == 0) return;
+  if (formAddProduct.product_price.value.length == 0) return;
+  if (formAddProduct.product_stock.value.length == 0) return;
 
   const datos = {
-    name: formAgregarProducto.product_title.value,
-    category: formAgregarProducto.product_category.value,
-    price: formAgregarProducto.product_price.value,
-    stock: formAgregarProducto.product_stock.value,
+    title: formAddProduct.product_title.value,
+    category: formAddProduct.product_category.value,
+    price: formAddProduct.product_price.value,
+    stock: formAddProduct.product_stock.value,
   };
-
+console.log(datos)
   socket.emit('agregarProducto', datos);
 });
 
-btnEditarProducto.addEventListener('click', (e) => {
+btnEditProduct.addEventListener('click', (e) => {
 
-  if (formEditarProducto.product_id.value.length == 0) return;
-  if (formEditarProducto.product_title.value.length == 0) return;
-  if (formEditarProducto.product_category.value.length == 0) return;
-  if (formEditarProducto.product_price.value.length == 0) return;
-  if (formEditarProducto.product_stock.value.length == 0) return;
-  if (formEditarProducto.product_thumbnail.value.length == 0) return;
+  if (formEditProduct.product_id.value.length == 0) return;
+  if (formEditProduct.product_title.value.length == 0) return;
+  if (formEditProduct.product_category.value.length == 0) return;
+  if (formEditProduct.product_price.value.length == 0) return;
+  if (formEditProduct.product_stock.value.length == 0) return;
+  if (formEditProduct.product_thumbnail.value.length == 0) return;
 
   const datos = {
-    _id: formEditarProducto.product_id.value,
-    title: formEditarProducto.product_title.value,
-    category: formEditarProducto.product_category.value,
-    price: formEditarProducto.product_price.value,
-    stock: formEditarProducto.product_stock.value,
-    thumbnail: formEditarProducto.product_thumbnail.value,
+    _id: formEditProduct.product_id.value,
+    title: formEditProduct.product_title.value,
+    category: formEditProduct.product_category.value,
+    price: formEditProduct.product_price.value,
+    stock: formEditProduct.product_stock.value,
+    thumbnail: formEditProduct.product_thumbnail.value,
   };
 
   socket.emit('editarProducto', datos);
 });
 
-socket.on('agregarProductoAgregado', (producto) => {
+socket.on('agregarProductoSuccess', (producto) => {
   mostrarMsj('success', `Se ha agregado un nuevo producto: ${producto.title}.`);
 
   const nuevoProductoCol = `<div id="product_${producto._id}" class="col">
@@ -100,7 +101,7 @@ socket.on('agregarProductoAgregado', (producto) => {
   lstProductos.innerHTML += nuevoProductoCol;
 });
 
-socket.on('editarProductoEditado', (producto) => {
+socket.on('editarProductoSuccess', (producto) => {
   mostrarMsj('success', `Se ha editado el producto: ${producto.title}.`);
   const elementotitle = document.getElementById(`product_${producto._id}_title`);
   if (elementotitle) elementotitle.innerHTML = producto.title;
@@ -115,7 +116,7 @@ socket.on('editarProductoEditado', (producto) => {
   if (elementoStock) elementoStock.innerHTML = `$ {producto.stock}`;
 });
 
-socket.on('borrarProductoBorrado', (producto) => {
+socket.on('borrarProductoSuccess', (producto) => {
   mostrarMsj('success', `Se ha eliminado un producto.`);
   const elemento = document.getElementById('product_' + producto);
   if (elemento) {

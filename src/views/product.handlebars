@@ -1,0 +1,16 @@
+<div class="row g-4">
+
+  <div class="col-md-4 col-sm-12">
+      <img src="../img/productos/{{ producto.thumbnail }}" class="card-img-top" alt="...">
+  </div>
+
+  <div class="col-md-8 col-sm-12">
+    <h3>{{ producto.title }}</h3>
+    <br>
+    <p><b>Precio:</b> $ {{ producto.price }}.</p>
+    <p><b>Stock:</b> {{ producto.stock }}.</p>
+    <p><a onclick="addToCart('{{ producto._id }}')" class="btn btn-sm btn-success">Agregar al Carrito</a></p>
+  </div>
+
+</div>
+
